@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Recensione</title>
+</head>
+
+<body>
+
+    <h1>Dettaglio Recensione</h1>
+
+    <p>
+        <strong>Film:</strong>
+        <span th:text="${recensione.film.title}">
+            Titolo Film
+        </span>
+    </p>
+
+    <p>
+        <strong>Utente:</strong>
+        <span th:text="${recensione.utente.username}">
+            Utente
+        </span>
+    </p>
+
+    <p>
+        <strong>Voto:</strong>
+        <span th:text="${recensione.voto}">
+            Voto
+        </span>
+        / 10
+    </p>
+
+    <p>
+        <strong>Data:</strong>
+        <span th:text="${#temporals.format(recensione.data, 'dd/MM/yyyy')}">
+            Data
+        </span>
+    </p>
+
+    <p>
+        <strong>Testo:</strong>
+        <span th:text="${recensione.testo}">
+            Testo Recensione
+        </span>
+    </p>
+
+
+    <br>
+	
+	<div th:if="${puoModificare}">
+
+	    <a th:href="@{'/recensione/edit/' + ${recensione.id}}">
+	        Modifica recensione
+	    </a>
+
+	    <br><br>
+
+	    <form th:action="@{'/recensione/delete/' + ${recensione.id}}"
+	          method="post">
+
+	        <button type="submit">
+	            Elimina Recensione
+	        </button>
+
+	    </form>
+
+	</div>
+	
+	<br><br>
+
+    <a th:href="@{/recensioni}">
+        Torna alle recensioni
+    </a>
+
+</body>
+
+</html>

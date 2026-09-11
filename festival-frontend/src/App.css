@@ -1,0 +1,875 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+
+  background: #f5f5f3;
+  color: #1d1d1f;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+
+/* =========================
+   CONTENITORE PRINCIPALE
+   ========================= */
+
+.app-shell {
+  width: min(1180px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 32px 0 70px;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.hero {
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+
+  gap: 30px;
+
+  align-items: center;
+
+  padding: 34px 36px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7e7e3;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 6px 22px
+    rgba(0, 0, 0, 0.05);
+
+  margin-bottom: 34px;
+}
+
+
+.hero-content {
+  min-width: 0;
+}
+
+
+.eyebrow {
+  margin: 0 0 8px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  color: #8a8a86;
+}
+
+
+.hero h1 {
+  margin: 0;
+
+  font-size: 42px;
+
+  line-height: 1.05;
+
+  color: #1d1d1f;
+}
+
+
+.hero-text {
+  margin: 12px 0 0;
+
+  color: #666;
+
+  font-size: 16px;
+}
+
+
+.hero-stats {
+  display: flex;
+
+  gap: 14px;
+}
+
+
+.hero-badge {
+  min-width: 110px;
+
+  padding: 18px 20px;
+
+  background: #f1f1ee;
+
+  border: 1px solid #e8e8e4;
+
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+
+.hero-badge span {
+  display: block;
+
+  font-size: 27px;
+
+  font-weight: 700;
+
+  color: #1d1d1f;
+}
+
+
+.hero-badge small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+/* =========================
+   AZIONI
+   ========================= */
+
+.top-actions {
+  display: flex;
+
+  justify-content: flex-start;
+
+  margin-bottom: 24px;
+}
+
+
+.back-button {
+  border: 1px solid #d8d8d5;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #333;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+.back-button:hover {
+  transform: translateY(-1px);
+
+  background: #f0f0ed;
+
+  border-color: #c6c6c2;
+}
+
+
+/* =========================
+   TITOLI E SEZIONI
+   ========================= */
+
+.section-block {
+  margin-top: 38px;
+}
+
+
+.compact-section {
+  margin-top: 32px;
+}
+
+
+.section-header,
+.catalog-header,
+.detail-title-row {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 18px;
+}
+
+
+.section-label,
+.panel-label {
+  margin: 0 0 5px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  color: #8b8b8b;
+}
+
+
+h2 {
+  margin: 0;
+
+  font-size: 30px;
+
+  line-height: 1.1;
+}
+
+
+h3 {
+  margin: 0;
+}
+
+
+.message {
+  color: #666;
+}
+
+
+.error {
+  padding: 13px 15px;
+
+  border-radius: 10px;
+
+  background: #ffe7e7;
+
+  color: #a31919;
+}
+
+
+.empty-message {
+  color: #777;
+}
+
+
+/* =========================
+   FESTIVAL HOME
+   ========================= */
+
+.festival-row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+.festival-card {
+  border: 1px solid #ecece8;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  box-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.04);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.festival-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #d7d7d2;
+
+  box-shadow:
+    0 10px 24px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+.festival-card-top {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-bottom: 15px;
+}
+
+
+.festival-year,
+.movie-year,
+.movie-duration,
+.detail-year {
+  display: inline-flex;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: #f0f0ee;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+.festival-card h3 {
+  margin-bottom: 8px;
+
+  font-size: 20px;
+}
+
+
+.festival-card p {
+  margin: 0 0 16px;
+
+  color: #666;
+}
+
+
+.date-range {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 13px;
+
+  color: #555;
+}
+
+
+/* =========================
+   CATALOGO E RICERCA
+   ========================= */
+
+.catalog-header {
+  align-items: center;
+}
+
+
+.catalog-tools {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.search-bar {
+  width: 330px;
+
+  padding: 11px 14px;
+
+  border: 1px solid #d8d8d5;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  color: #222;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.search-bar::placeholder {
+  color: #929292;
+}
+
+
+.search-bar:focus {
+  border-color: #999;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 0, 0, 0.04);
+}
+
+
+.result-count {
+  white-space: nowrap;
+
+  font-size: 13px;
+
+  color: #777;
+}
+
+
+/* =========================
+   FILM
+   ========================= */
+
+.movie-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+.movie-card {
+  min-height: 185px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  border: 1px solid #ecece8;
+
+  padding: 20px;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  box-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.04);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+
+.movie-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #d7d7d2;
+
+  box-shadow:
+    0 10px 24px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+.movie-card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+
+.movie-card h3 {
+  font-size: 21px;
+
+  margin-bottom: 6px;
+}
+
+
+.movie-genre {
+  margin: 0;
+
+  color: #727272;
+}
+
+
+.movie-meta {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: auto;
+
+  padding-top: 22px;
+
+  border-top: 1px solid #efefec;
+
+  font-size: 12px;
+
+  color: #777;
+}
+
+
+/* =========================
+   PAGINE DETTAGLIO
+   ========================= */
+
+.detail-page {
+  margin-top: 14px;
+}
+
+
+.detail-year {
+  font-size: 14px;
+
+  padding: 8px 12px;
+}
+
+
+.film-detail-grid,
+.festival-detail-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+
+/* =========================
+   PANNELLI
+   ========================= */
+
+.panel {
+  padding: 24px;
+
+  border: 1px solid #ecece8;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.04);
+}
+
+
+.panel > p:not(.panel-label) {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin: 0;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid #ededeb;
+}
+
+
+.panel > p:last-of-type {
+  border-bottom: none;
+}
+
+
+.panel strong {
+  color: #444;
+}
+
+
+.panel span {
+  text-align: right;
+
+  color: #666;
+}
+
+
+.description-box {
+  margin-top: 18px;
+
+  padding-top: 16px;
+
+  border-top: 1px solid #ededeb;
+
+  line-height: 1.6;
+
+  color: #555;
+}
+
+
+/* =========================
+   PROIEZIONI
+   ========================= */
+
+.screening-list {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.screening-item {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 18px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #ededeb;
+}
+
+
+.screening-item:last-child {
+  border-bottom: none;
+}
+
+
+.screening-item div:first-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.screening-item span,
+.screening-item small {
+  color: #777;
+}
+
+
+.screening-right {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 4px;
+}
+
+
+/* =========================
+   RECENSIONI
+   ========================= */
+
+.review-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+.review-card {
+  padding: 20px;
+
+  border: 1px solid #ecece8;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 18px
+    rgba(0, 0, 0, 0.04);
+}
+
+
+.review-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+
+.rating {
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  background: #efefed;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+.review-card p {
+  line-height: 1.55;
+
+  color: #555;
+}
+
+
+.review-card small {
+  display: block;
+
+  margin-top: 18px;
+
+  color: #888;
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+
+  .hero-stats {
+    justify-content: flex-start;
+  }
+
+
+  .festival-row,
+  .movie-grid,
+  .review-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .film-detail-grid,
+  .festival-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .catalog-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .catalog-tools {
+    width: 100%;
+  }
+
+
+  .search-bar {
+    flex: 1;
+
+    width: auto;
+  }
+
+}
+
+
+/* =========================
+   SMARTPHONE
+   ========================= */
+
+@media (max-width: 620px) {
+
+  .app-shell {
+    width: min(100% - 24px, 1180px);
+
+    padding-top: 16px;
+  }
+
+
+  .hero {
+    padding: 24px;
+
+    gap: 22px;
+  }
+
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+
+  .hero-stats {
+    width: 100%;
+  }
+
+
+  .hero-badge {
+    flex: 1;
+
+    min-width: 0;
+  }
+
+
+  .festival-row,
+  .movie-grid,
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .catalog-tools {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .search-bar {
+    width: 100%;
+  }
+
+
+  .section-header,
+  .detail-title-row {
+    align-items: flex-start;
+  }
+
+
+  .screening-item {
+    flex-direction: column;
+  }
+
+
+  .screening-right {
+    align-items: flex-start;
+  }
+
+}

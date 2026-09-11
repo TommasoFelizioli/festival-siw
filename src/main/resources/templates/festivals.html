@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Festival</title>
+</head>
+
+<body>
+
+    <h1>Festival</h1>
+
+    <!--
+        "festivals" è la lista che il Controller
+        ha inserito nel Model con:
+        model.addAttribute("festivals", festivalService.findAll())
+    -->
+    <ul>
+        <!--
+            th:each scorre tutti i festival della lista.
+            Ad ogni giro, "festival" rappresenta un singolo Festival.
+        -->
+        <li th:each="festival : ${festivals}">
+
+            <!--
+                Il nome del festival è un link.
+                Se ad esempio l'id è 3, il link diventa /festival/3
+            -->
+            <a th:href="@{'/festival/' + ${festival.id}}"
+               th:text="${festival.nome}">
+                Nome Festival
+            </a>
+
+        </li>
+    </ul>
+	
+	<br>
+
+	<!-- Creare un nuovo Festival è una funzione riservata all'ADMIN -->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{/festival/new}">
+	        Nuovo Festival
+	    </a>
+
+	</div>
+
+</body>
+
+</html>

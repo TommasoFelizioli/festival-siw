@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<!--
+    Questa è la pagina che mostra la lista dei Film.
+
+    I Film NON sono scritti direttamente nell'HTML:
+    arrivano dal database attraverso il Controller.
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Films</title>
+</head>
+
+<body>
+
+	<!-- Titolo che vediamo nella pagina. -->
+    <h1>Films</h1>
+
+	<!-- Creiamo una lista HTML. -->
+	
+		<!--
+		          Il Controller ci ha passato una collezione
+		          chiamata "films".
+
+		          th:each significa:
+
+		          "Per ogni Film presente dentro films,
+		           esegui quello che c'è dentro questo <li>."
+
+		          film  = il singolo Film che stiamo guardando
+		          films = tutti i Film
+
+		          È praticamente un ciclo for.
+		      --> 
+			
+			<!--
+			    Per ogni Film creiamo un link usando il suo id.
+
+			    th:text mostra il titolo del Film corrente.
+
+			    th:href costruisce l'indirizzo della pagina
+			    dedicata a quel Film.
+
+			    Esempio:
+			    se film.id = 1
+			    e film.title = "Interstellar"
+
+			    Thymeleaf crea:
+			    /film/1
+			    e mostra la scritta "Interstellar".
+			-->
+			<!--
+			    Se il Film ha un titolo,
+			    mostriamo normalmente il titolo
+			    come link alla sua pagina.
+			-->
+			
+	
+	<ul>
+
+	    <li th:each="film : ${films}">
+
+	        <a th:if="${film.title != null and !film.title.isBlank()}"
+	           th:href="@{'/film/' + ${film.id}}"
+	           th:text="${film.title}">
+	            Film title
+	        </a>
+
+	        <a th:if="${film.title == null or film.title.isBlank()}"
+	           th:href="@{'/film/' + ${film.id}}">
+	            Film senza titolo
+	        </a>
+
+	    </li>
+
+	</ul>
+
+	<br>
+
+	<!-- Inserire un nuovo Film è una funzione riservata all'ADMIN -->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{/films/new}">
+	        Nuovo Film
+	    </a>
+
+	</div>
+
+</body>
+
+</html>

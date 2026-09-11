@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recensioni</title>
+</head>
+
+<body>
+
+    <h1>Recensioni</h1>
+
+    <!--
+        Mostriamo tutte le Recensioni
+        ricevute dal Controller.
+    -->
+    <ul>
+
+        <li th:each="recensione : ${recensioni}">
+
+            <!-- Film recensito -->
+            <strong th:text="${recensione.film.title}">
+                Titolo Film
+            </strong>
+
+            -
+
+            <!-- Utente che ha scritto la Recensione -->
+            <span th:text="${recensione.utente.username}">
+                Utente
+            </span>
+
+            -
+
+            <!-- Voto -->
+            <span th:text="${recensione.voto}">
+                Voto
+            </span>
+
+            / 10
+
+            -
+
+            <!-- Link al dettaglio della Recensione -->
+            <a th:href="@{'/recensione/' + ${recensione.id}}">
+                Dettagli
+            </a>
+
+        </li>
+
+    </ul>
+
+
+    <br>
+
+    <a th:href="@{/recensione/new}">
+        Aggiungi una recensione
+    </a>
+
+</body>
+
+</html>

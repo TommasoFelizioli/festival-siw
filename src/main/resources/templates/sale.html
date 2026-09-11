@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sale</title>
+</head>
+
+<body>
+
+    <h1>Sale</h1>
+
+    <ul>
+        <li th:each="sala : ${sale}">
+
+            <a th:href="@{'/sala/' + ${sala.id}}"
+               th:text="${sala.nome}">
+                Nome Sala
+            </a>
+
+        </li>
+    </ul>
+
+	<br>
+
+	<!-- Inserire una nuova Sala è una funzione riservata all'ADMIN -->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{/sala/new}">
+	        Nuova Sala
+	    </a>
+
+	</div>
+
+</body>
+
+</html>

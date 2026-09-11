@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<!--
+    Questa pagina contiene il form
+    per inserire un nuovo Regista.
+
+    Il Controller ci passa un oggetto
+    chiamato "regista".
+
+    All'inizio è vuoto.
+    Compilando il form, inseriamo
+    i valori dentro questo oggetto.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuovo Regista</title>
+</head>
+
+<body>
+
+    <h1>Inserisci un nuovo Regista</h1>
+
+
+    <!--
+        th:object indica l'oggetto
+        su cui lavora il form.
+
+        In questo caso è il Regista
+        passato dal Controller.
+    -->
+	<!--
+	    th:action indica DOVE inviare i dati del form.
+
+	    In questo caso li mandiamo a /registi.
+
+	    method="post" significa che stiamo facendo
+	    una richiesta POST, cioè un'operazione
+	    che crea/salva dati.
+	-->
+	<form th:action="@{/registi}"
+	      th:object="${regista}"
+	      method="post">
+		
+		  <!-- Manteniamo l'id durante la modifica -->
+		  <input type="hidden"
+		         th:field="*{id}">
+        <!-- Campo collegato al nome del Regista. -->
+        <p>
+            Nome:
+            <input type="text" th:field="*{nome}">
+			<span th:if="${#fields.hasErrors('nome')}"
+			      th:errors="*{nome}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!-- Campo collegato al cognome del Regista. -->
+        <p>
+            Cognome:
+            <input type="text" th:field="*{cognome}">
+			<span th:if="${#fields.hasErrors('cognome')}"
+			      th:errors="*{cognome}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!--
+            type="date" fa comparire
+            un campo per scegliere una data.
+
+            Il valore verrà collegato
+            a dataNascita, che in Java
+            abbiamo definito come LocalDate.
+        -->
+        <p>
+            Data di nascita:
+            <input type="date" th:field="*{dataNascita}">
+			<span th:if="${#fields.hasErrors('dataNascita')}"
+			      th:errors="*{dataNascita}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!-- Campo collegato alla nazionalità. -->
+        <p>
+            Nazionalità:
+            <input type="text" th:field="*{nazionalita}">
+			<span th:if="${#fields.hasErrors('nazionalita')}"
+			      th:errors="*{nazionalita}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!--
+            Per ora questo pulsante
+            mostra il form, ma non abbiamo
+            ancora indicato dove inviare i dati.
+
+            Lo faremo nel prossimo passaggio.
+        -->
+        <button type="submit">Salva Regista</button>
+
+    </form>
+
+
+    <p>
+        <a th:href="@{/registi}">Torna alla lista dei registi</a>
+    </p>
+
+</body>
+
+</html>

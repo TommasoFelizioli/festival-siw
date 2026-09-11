@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Recensione</title>
+</head>
+
+<body>
+
+    <h1>Nuova Recensione</h1>
+
+
+    <!--
+        Questo messaggio compare solo se il Controller
+        ha inserito "errore" nel Model.
+    -->
+    <p th:if="${errore}" th:text="${errore}">
+        Errore
+    </p>
+
+
+    <!--
+        Il form è collegato all'oggetto "recensione"
+        creato nel Controller.
+    -->
+    <form th:action="@{/recensione}"
+          th:object="${recensione}"
+          method="post">
+		  
+		  <!--
+		      Se stiamo modificando una Recensione esistente,
+		      manteniamo il suo id.
+		      
+		      Se invece è una nuova Recensione,
+		      l'id sarà null.
+		  -->
+		  <input type="hidden"
+		         th:field="*{id}">
+
+
+        <!-- FILM -->
+        <div>
+
+            <label>Film:</label>
+
+            <!--
+                "films" contiene tutti i Film
+                passati dal Controller.
+            -->
+            <select th:field="*{film}">
+
+                <option th:each="film : ${films}"
+                        th:value="${film.id}"
+                        th:text="${film.title}">
+                    Film
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <br>
+
+
+
+        <!-- VOTO -->
+        <div>
+
+            <label>Voto:</label>
+			<!-- Il voto deve essere compreso tra 1 e 10 -->
+			<input type="number"
+			       th:field="*{voto}"
+			       min="1"
+			       max="10"
+			       required>
+				   <span th:if="${#fields.hasErrors('voto')}"
+				         th:errors="*{voto}"
+				         style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- TESTO -->
+        <div>
+
+            <label>Recensione:</label>
+
+            <textarea th:field="*{testo}"
+                      rows="5"
+                      cols="40">
+            </textarea>
+			<span th:if="${#fields.hasErrors('testo')}"
+			      th:errors="*{testo}"
+			      style="color: red;"></span>
+
+        </div>
+
+
+        <!--
+            Non facciamo scegliere la data all'utente.
+
+            Il Controller l'ha già impostata
+            automaticamente con LocalDate.now().
+        -->
+        <input type="hidden"
+               th:field="*{data}">
+
+
+        <br>
+
+        <button type="submit">
+            Salva Recensione
+        </button>
+
+    </form>
+
+
+    <br>
+
+    <a th:href="@{/recensioni}">
+        Torna alle recensioni
+    </a>
+
+</body>
+
+</html>

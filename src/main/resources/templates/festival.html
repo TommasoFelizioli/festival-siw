@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Festival</title>
+</head>
+
+<body>
+
+    <!--
+        "festival" è il singolo oggetto Festival
+        che il Controller ha inserito nel Model.
+    -->
+    <h1 th:text="${festival.nome}">Nome Festival</h1>
+
+    <p>
+        Anno:
+        <span th:text="${festival.anno}">Anno</span>
+    </p>
+
+    <p>
+        Città:
+        <span th:text="${festival.citta}">Città</span>
+    </p>
+
+    <p>
+        Data di inizio:
+        <span th:text="${#temporals.format(festival.dataInizio, 'dd/MM/yyyy')}">Data inizio</span>
+    </p>
+
+    <p>
+        Data di fine:
+        <span th:text="${#temporals.format(festival.dataFine, 'dd/MM/yyyy')}">Data fine</span>
+    </p>
+
+    <p>
+        Descrizione:
+        <span th:text="${festival.descrizione}">Descrizione</span>
+    </p>
+	
+	<br>
+
+	<br>
+
+	<!--
+	    La modifica del Festival è una funzione
+	    riservata all'ADMIN.
+	-->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{'/festival/edit/' + ${festival.id}}">
+	        Modifica Festival
+	    </a>
+
+	</div>
+
+	<br><br>
+	
+	<br><br>
+	
+    <a href="/festivals">Torna ai festival</a>
+	
+	<h2>Film partecipanti</h2>
+
+	<!--
+	    festival.films contiene i Film associati
+	    a questo Festival.
+	-->
+	<ul>
+	    <li th:each="film : ${festival.films}">
+
+	        <!--
+	            Cliccando sul titolo andiamo
+	            alla pagina di dettaglio del Film.
+	        -->
+	        <a th:href="@{'/film/' + ${film.id}}"
+	           th:text="${film.title}">
+	            Titolo Film
+	        </a>
+
+	    </li>
+	</ul>
+	
+	<h2>Proiezioni</h2>
+
+	<!--
+	    festival.proiezioni contiene tutte le Proiezioni
+	    associate a questo Festival.
+	-->
+
+	<p th:if="${#lists.isEmpty(festival.proiezioni)}">
+	    Nessuna proiezione disponibile.
+	</p>
+
+	<ul>
+
+	    <li th:each="proiezione : ${festival.proiezioni}">
+
+	        <!-- Data e ora della Proiezione -->
+	        <span th:text="${#temporals.format(proiezione.data, 'dd/MM/yyyy')}">
+	            Data
+	        </span>
+
+	        -
+
+	        <span th:text="${proiezione.ora}">
+	            Ora
+	        </span>
+
+	        -
+
+	        <!-- Film proiettato -->
+	        <span th:text="${proiezione.film.title}">
+	            Titolo Film
+	        </span>
+
+	        -
+
+	        <!-- Sala della Proiezione -->
+	        <span th:text="${proiezione.sala.nome}">
+	            Sala
+	        </span>
+
+	        -
+
+	        <!-- Possiamo accedere al dettaglio della Proiezione -->
+	        <a th:href="@{'/proiezione/' + ${proiezione.id}}">
+	            Dettagli
+	        </a>
+
+	    </li>
+
+	</ul>
+
+</body>
+
+</html>

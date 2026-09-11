@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Proiezione</title>
+</head>
+
+<body>
+
+    <h1>Dettaglio Proiezione</h1>
+
+    <!--
+        "proiezione" arriva dal Controller:
+        model.addAttribute("proiezione", proiezioneService.findById(id));
+    -->
+
+    <p>
+        <strong>Data:</strong>
+        <span th:text="${#temporals.format(proiezione.data, 'dd/MM/yyyy')}">>Data</span>
+    </p>
+
+    <p>
+        <strong>Ora:</strong>
+        <span th:text="${proiezione.ora}">Ora</span>
+    </p>
+
+    <p>
+        <strong>Stato:</strong>
+        <span th:text="${proiezione.stato}">Stato</span>
+    </p>
+
+
+    <p>
+        <strong>Festival:</strong>
+
+        <!--
+            proiezione.festival.nome significa:
+            prendi il Festival collegato alla Proiezione
+            e poi leggine il nome.
+        -->
+        <a th:href="@{'/festival/' + ${proiezione.festival.id}}"
+           th:text="${proiezione.festival.nome}">
+            Festival
+        </a>
+    </p>
+
+
+    <p>
+        <strong>Film:</strong>
+
+        <a th:href="@{'/film/' + ${proiezione.film.id}}"
+           th:text="${proiezione.film.title}">
+            Film
+        </a>
+    </p>
+
+
+    <p>
+        <strong>Sala:</strong>
+
+        <a th:href="@{'/sala/' + ${proiezione.sala.id}}"
+           th:text="${proiezione.sala.nome}">
+            Sala
+        </a>
+    </p>
+	
+	<br>
+
+	<!--
+	    Questi comandi sono visibili solamente
+	    agli utenti con ruolo ADMIN.
+	-->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <br>
+
+	    <a th:href="@{'/proiezione/edit/' + ${proiezione.id}}">
+	        Modifica Proiezione
+	    </a>
+
+	    <br><br>
+
+	    <!--
+	        L'eliminazione viene inviata tramite POST.
+	        La richiesta è protetta anche dal controllo CSRF.
+	    -->
+	    <form th:action="@{'/proiezione/delete/' + ${proiezione.id}}"
+	          method="post">
+
+	        <button type="submit">
+	            Elimina Proiezione
+	        </button>
+
+	    </form>
+
+	</div>
+
+    <br><br>
+
+    <a th:href="@{/proiezioni}">
+        Torna alle proiezioni
+    </a>
+
+</body>
+
+</html>

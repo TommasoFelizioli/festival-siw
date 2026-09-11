@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<!--
+    Questa pagina mostra UN SOLO Film.
+
+    Il Film arriva dal database attraverso:
+    Controller -> Service -> Repository.
+
+    Il Controller lo mette nel Model con il nome "film",
+    quindi qui possiamo usare ${film...}.
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <!-- Serve per visualizzare correttamente i caratteri. -->
+    <meta charset="UTF-8">
+
+    <!-- Titolo della scheda del browser. -->
+    <title>Film</title>
+
+</head>
+
+<body>
+
+    <!--
+        Mostriamo il titolo del Film.
+
+        Se il Film è Interstellar:
+        ${film.title} vale "Interstellar".
+    -->
+    <h1 th:text="${film.title}">
+        Titolo del film
+    </h1>
+
+
+    <!-- Mostriamo l'anno del Film. -->
+    <p>
+        Anno:
+        <span th:text="${film.year}">
+            Anno
+        </span>
+    </p>
+
+
+    <!-- Mostriamo la durata del Film. -->
+    <p>
+        Durata:
+        <span th:text="${film.duration}">
+            Durata
+        </span>
+        minuti
+    </p>
+
+
+    <!-- Mostriamo il genere del Film. -->
+    <p>
+        Genere:
+        <span th:text="${film.genre}">
+            Genere
+        </span>
+    </p>
+
+
+    <!-- Mostriamo il paese di produzione del Film. -->
+    <p>
+        Paese di produzione:
+        <span th:text="${film.countryProduction}">
+            Paese
+        </span>
+    </p>
+	
+	<!--
+	    Mostriamo il Regista associato al Film.
+
+	    film.regista indica il Regista
+	    collegato a questo Film.
+
+	    Da quel Regista leggiamo
+	    nome e cognome.
+	-->
+	<p>
+	    Regista:
+
+	    <a th:if="${film.regista != null}"
+	       th:href="@{'/regista/' + ${film.regista.id}}"
+	       th:text="${film.regista.nome + ' ' + film.regista.cognome}">
+	        Nome Regista
+	    </a>
+
+	    <span th:if="${film.regista == null}">
+	        Non specificato
+	    </span>
+	</p>
+	
+	<h2>Festival</h2>
+
+	<!--
+	    film.festivals contiene tutti i Festival
+	    a cui questo Film partecipa.
+	-->
+	<ul>
+	    <li th:each="festival : ${film.festivals}">
+
+	        <!-- Il nome del Festival porta alla sua pagina di dettaglio -->
+	        <a th:href="@{'/festival/' + ${festival.id}}"
+	           th:text="${festival.nome}">
+	            Nome Festival
+	        </a>
+
+	    </li>
+	</ul>
+	
+	<h2>Recensioni</h2>
+
+	<p th:if="${#lists.isEmpty(film.recensioni)}">
+	    Nessuna recensione disponibile.
+	</p>
+
+	<ul>
+
+	    <li th:each="recensione : ${film.recensioni}">
+
+	        <strong th:text="${recensione.utente.username}">
+	            Utente
+	        </strong>
+
+	        -
+
+	        <span th:text="${recensione.voto}">
+	            Voto
+	        </span>
+
+	        / 10
+
+	        -
+
+	        <span th:text="${recensione.testo}">
+	            Testo recensione
+	        </span>
+
+	        -
+
+	        <a th:href="@{'/recensione/' + ${recensione.id}}">
+	            Dettagli
+	        </a>
+
+	    </li>
+
+	</ul>
+	
+	<br>
+
+	<!--
+	    La modifica del Film è una funzione
+	    riservata all'ADMIN.
+	-->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{'/film/edit/' + ${film.id}}">
+	        Modifica Film
+	    </a>
+
+	</div>
+
+	<br><br>
+    <!--
+        Link per tornare alla pagina con tutti i Film.
+    -->
+    <a th:href="@{/films}">
+        Torna alla lista dei film
+    </a>
+	
+	
+
+</body>
+
+</html>

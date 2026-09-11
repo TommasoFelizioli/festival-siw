@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio Sala</title>
+</head>
+
+<body>
+
+    <!--
+        "sala" è il singolo oggetto Sala
+        che il Controller ha inserito nel Model.
+    -->
+    <h1 th:text="${sala.nome}">Nome Sala</h1>
+
+    <p>
+        Indirizzo:
+        <span th:text="${sala.indirizzo}">Indirizzo</span>
+    </p>
+
+    <p>
+        Capienza:
+        <span th:text="${sala.capienza}">Capienza</span>
+    </p>
+	
+	<br>
+
+	<!--
+	    La modifica della Sala è una funzione
+	    riservata all'ADMIN.
+	-->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{'/sala/edit/' + ${sala.id}}">
+	        Modifica Sala
+	    </a>
+
+	</div>
+	
+	<br><br>
+
+    <a href="/sale">Torna alle sale</a>
+
+</body>
+
+</html>

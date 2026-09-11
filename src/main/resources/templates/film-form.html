@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<!--
+    Questa pagina contiene il form per inserire un nuovo Film.
+
+    Il Controller ci passa un oggetto chiamato "film".
+
+    All'inizio questo oggetto è vuoto:
+    title = null
+    year = null
+    duration = null
+    genre = null
+    countryProduction = null
+
+    Quando l'utente compila il form,
+    i valori verranno inseriti dentro questo oggetto Film.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuovo Film</title>
+</head>
+
+<body>
+
+    <h1>Inserisci un nuovo Film</h1>
+
+
+    <!--
+        th:object indica qual è l'oggetto
+        su cui stiamo lavorando nel form.
+
+        In questo caso usiamo il Film
+        che il Controller ha passato nel Model
+        con il nome "film".
+    -->
+	<!--
+	    th:action indica DOVE devono essere inviati
+	    i dati quando premiamo "Salva Film".
+
+	    In questo caso i dati vengono inviati a /films.
+
+	    method="post" indica che stiamo facendo
+	    una richiesta POST.
+
+	    Usiamo POST perché vogliamo creare
+	    e salvare un nuovo Film.
+	-->
+	<form th:action="@{/films}"
+	      th:object="${film}"
+	      method="post">
+		
+		  <!--
+		      Se stiamo modificando un Film esistente,
+		      manteniamo il suo id.
+		  -->
+		  <input type="hidden"
+		         th:field="*{id}">
+        <!--
+            th:field collega questo campo
+            all'attributo title dell'oggetto Film.
+        -->
+		<p>
+		    Titolo:
+		    <input type="text" th:field="*{title}">
+
+		    <!-- Mostra l'errore di validazione del titolo, se presente. -->
+		    <span th:if="${#fields.hasErrors('title')}"
+		          th:errors="*{title}"
+		          style="color: red;"></span>
+		</p>
+
+
+        <!--
+            Questo campo è collegato
+            all'attributo year del Film.
+        -->
+        <p>
+            Anno:
+            <input type="number" th:field="*{year}">
+			<!-- Errore dell'anno -->
+			<span th:if="${#fields.hasErrors('year')}"
+			      th:errors="*{year}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!--
+            Questo campo è collegato
+            all'attributo duration del Film.
+        -->
+        <p>
+            Durata:
+            <input type="number" th:field="*{duration}">
+			<!-- Errore della durata -->
+			<span th:if="${#fields.hasErrors('duration')}"
+			      th:errors="*{duration}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!--
+            Questo campo è collegato
+            all'attributo genre del Film.
+        -->
+        <p>
+            Genere:
+            <input type="text" th:field="*{genre}">
+			<!-- Errore del genere -->
+			<span th:if="${#fields.hasErrors('genre')}"
+			      th:errors="*{genre}"
+			      style="color: red;"></span>
+        </p>
+
+
+        <!--
+            Questo campo è collegato
+            all'attributo countryProduction del Film.
+        -->
+        <p>
+            Paese di produzione:
+            <input type="text" th:field="*{countryProduction}">
+			<!-- Errore del paese di produzione -->
+			<span th:if="${#fields.hasErrors('countryProduction')}"
+			      th:errors="*{countryProduction}"
+			      style="color: red;"></span>
+        </p>
+
+		<!--
+		    Qui scegliamo il Regista del Film.
+
+		    "registi" è la lista che il Controller
+		    ci ha passato nel Model.
+
+		    th:each scorre tutti i Registi
+		    presenti nel database.
+
+		    th:value usa l'id del Regista:
+		    questo è il valore che verrà inviato
+		    quando salviamo il Film.
+
+		    th:text mostra invece nome e cognome
+		    nella tendina.
+		-->
+		<p>
+		    Regista:
+
+		    <select th:field="*{regista}">
+
+		        <option value="">
+		            Seleziona un regista
+		        </option>
+
+		        <option th:each="regista : ${registi}"
+		                th:value="${regista.id}"
+		                th:text="${regista.nome + ' ' + regista.cognome}">
+		        </option>
+
+		    </select>
+		</p>
+        <!--
+            Questo pulsante invierà il form.
+
+            Per ora però non abbiamo ancora indicato
+            DOVE mandare i dati e CON QUALE metodo HTTP.
+
+            Lo aggiungeremo nel prossimo passaggio.
+        -->
+        <button type="submit">Salva Film</button>
+
+    </form>
+
+
+    <!-- Link per tornare alla lista dei Film. -->
+    <p>
+        <a th:href="@{/films}">Torna alla lista dei film</a>
+    </p>
+
+</body>
+
+</html>

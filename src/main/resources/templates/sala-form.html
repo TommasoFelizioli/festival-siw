@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Sala</title>
+</head>
+
+<body>
+
+    <h1>Inserisci una nuova Sala</h1>
+
+    <!--
+        Il form lavora sull'oggetto "sala"
+        che il Controller ha messo nel Model.
+    -->
+    <form th:action="@{/sala}"
+          th:object="${sala}"
+          method="post">
+		  
+		  <!-- Manteniamo l'id durante la modifica -->
+		  <input type="hidden"
+		         th:field="*{id}">
+        <p>
+            Nome:
+            <input type="text" th:field="*{nome}">
+			<span th:if="${#fields.hasErrors('nome')}"
+			      th:errors="*{nome}"
+			      style="color: red;"></span>
+        </p>
+
+        <p>
+            Indirizzo:
+            <input type="text" th:field="*{indirizzo}">
+			<span th:if="${#fields.hasErrors('indirizzo')}"
+			      th:errors="*{indirizzo}"
+			      style="color: red;"></span>
+        </p>
+
+        <p>
+            Capienza:
+            <input type="number" th:field="*{capienza}">
+			<span th:if="${#fields.hasErrors('capienza')}"
+			      th:errors="*{capienza}"
+			      style="color: red;"></span>
+        </p>
+
+        <button type="submit">Salva Sala</button>
+
+    </form>
+
+    <br>
+
+    <a href="/sale">Torna alle sale</a>
+
+</body>
+
+</html>

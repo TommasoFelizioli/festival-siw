@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Proiezioni</title>
+</head>
+
+<body>
+
+    <h1>Proiezioni</h1>
+
+    <!--
+        "proiezioni" arriva dal Controller:
+        model.addAttribute("proiezioni", proiezioneService.findAll());
+    -->
+    <ul>
+
+        <!--
+            Per ogni Proiezione presente nel database
+            creiamo un elemento della lista.
+        -->
+        <li th:each="proiezione : ${proiezioni}">
+
+            <!--
+                Cliccando sulla Proiezione andremo
+                alla sua pagina di dettaglio.
+            -->
+            <a th:href="@{'/proiezione/' + ${proiezione.id}}">
+
+                <!-- Mostriamo data e ora -->
+                <span th:text="${#temporals.format(proiezione.data, 'dd/MM/yyyy')}">
+                    Data
+                </span>
+
+                -
+
+                <span th:text="${proiezione.ora}">
+                    Ora
+                </span>
+
+                -
+
+                <!-- Mostriamo il titolo del Film -->
+                <span th:text="${proiezione.film.title}">
+                    Film
+                </span>
+
+                -
+
+                <!-- Mostriamo il nome della Sala -->
+                <span th:text="${proiezione.sala.nome}">
+                    Sala
+                </span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+
+    <br>
+
+
+	<!-- Creare una nuova Proiezione è una funzione riservata all'ADMIN -->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{/proiezione/new}">
+	        Aggiungi una nuova Proiezione
+	    </a>
+
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<!--
+    Questa pagina mostra il dettaglio
+    di un singolo Regista.
+
+    Il Controller ci passa un oggetto
+    chiamato "regista".
+
+    Quindi qui possiamo usare:
+    ${regista.nome}
+    ${regista.cognome}
+    ${regista.dataNascita}
+    ${regista.nazionalita}
+    ${regista.films}
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Regista</title>
+</head>
+
+<body>
+
+    <!--
+        Mostriamo nome e cognome
+        come titolo principale della pagina.
+    -->
+    <h1 th:text="${regista.nome + ' ' + regista.cognome}">
+        Nome Regista
+    </h1>
+
+
+    <!-- Mostriamo la data di nascita. -->
+    <p>
+        Data di nascita:
+        <span th:text="${#temporals.format(regista.dataNascita, 'dd/MM/yyyy')}">
+            Data
+        </span>
+    </p>
+
+
+    <!-- Mostriamo la nazionalità. -->
+    <p>
+        Nazionalità:
+        <span th:text="${regista.nazionalita}">
+            Nazionalità
+        </span>
+    </p>
+
+
+    <h2>Film diretti</h2>
+
+
+    <!--
+        regista.films contiene tutti i Film
+        associati a questo Regista.
+
+        Questa lista arriva dalla relazione:
+
+        @OneToMany(mappedBy = "regista")
+
+        presente dentro Regista.java.
+    -->
+    <ul>
+
+        <!--
+            Per ogni Film diretto dal Regista
+            creiamo un elemento della lista.
+        -->
+        <li th:each="film : ${regista.films}">
+
+            <!--
+                Mostriamo il titolo del Film
+                e lo rendiamo anche cliccabile.
+
+                Cliccando andiamo alla pagina
+                di dettaglio di quel Film.
+            -->
+            <a th:href="@{'/film/' + ${film.id}}"
+               th:text="${film.title}">
+                Titolo Film
+            </a>
+
+        </li>
+
+    </ul>
+
+
+    <!-- Torniamo alla lista dei Registi. -->
+    <p>
+        <a th:href="@{/registi}">
+            Torna alla lista dei registi
+        </a>
+    </p>
+	
+	<br>
+
+	<!--
+	    La modifica del Regista è una funzione
+	    riservata all'ADMIN.
+	-->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{'/regista/edit/' + ${regista.id}}">
+	        Modifica Regista
+	    </a>
+
+	</div>
+	
+	
+	<br><br>
+
+    <!-- Torniamo alla lista dei Film. -->
+    <p>
+        <a th:href="@{/films}">
+            Torna ai film
+        </a>
+    </p>
+
+</body>
+

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Proiezione</title>
+</head>
+
+<body>
+
+    <h1>Nuova Proiezione</h1>
+	
+	<!--
+	    Questo messaggio compare solo se il Controller
+	    ha inserito "errore" nel Model.
+	-->
+	<p th:if="${errore}" th:text="${errore}">
+	    Errore
+	</p>
+	
+    <!--
+        th:object collega il form all'oggetto "proiezione"
+        che abbiamo messo nel Model dal Controller.
+    -->
+    <form th:action="@{/proiezione}"
+          th:object="${proiezione}"
+          method="post">
+		
+		  <!-- Manteniamo l'id durante la modifica -->
+		  <input type="hidden"
+		         th:field="*{id}">
+
+        <!-- DATA -->
+        <div>
+            <label>Data:</label>
+
+            <!--
+                type="date" permette di scegliere una data.
+                th:field="*{data}" collega questo input
+                all'attributo data di Proiezione.
+            -->
+            <input type="date" th:field="*{data}">
+			<span th:if="${#fields.hasErrors('data')}"
+			      th:errors="*{data}"
+			      style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- ORA -->
+        <div>
+            <label>Ora:</label>
+
+            <!--
+                LocalTime viene compilato tramite un input di tipo time.
+            -->
+            <input type="time" th:field="*{ora}">
+			<span th:if="${#fields.hasErrors('ora')}"
+			      th:errors="*{ora}"
+			      style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- FESTIVAL -->
+        <div>
+            <label>Festival:</label>
+
+            <select th:field="*{festival}">
+				<option value="">Seleziona un festival</option>
+
+
+                <!--
+                    Il Controller ci ha passato tutti i festival
+                    con il nome "festivals".
+
+                    Per ogni festival creiamo una option.
+                -->
+                <option th:each="festival : ${festivals}"
+                        th:value="${festival.id}"
+                        th:text="${festival.nome}">
+                    Festival
+                </option>
+
+            </select>
+			<span th:if="${#fields.hasErrors('festival')}"
+							      th:errors="*{festival}"
+							      style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- FILM -->
+        <div>
+            <label>Film:</label>
+
+            <select th:field="*{film}">
+				<option value="">Seleziona un Film</option>
+
+                <option th:each="film : ${films}"
+                        th:value="${film.id}"
+                        th:text="${film.title}">
+                    Film
+                </option>
+
+            </select>
+			<span th:if="${#fields.hasErrors('film')}"
+							      th:errors="*{film}"
+							      style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- SALA -->
+        <div>
+            <label>Sala:</label>
+
+            <select th:field="*{sala}">
+				<option value="">Seleziona una Sala</option>
+
+                <option th:each="sala : ${sale}"
+                        th:value="${sala.id}"
+                        th:text="${sala.nome}">
+                    Sala
+                </option>
+
+            </select>
+			<span th:if="${#fields.hasErrors('sala')}"
+							      th:errors="*{sala}"
+							      style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- STATO -->
+        <div>
+            <label>Stato:</label>
+
+            <select th:field="*{stato}">
+				<option value="">Seleziona uno Stato</option>
+
+                <!--
+                    "stati" contiene i valori dell'enum:
+                    SCHEDULED
+                    COMPLETED
+                    CANCELLED
+                -->
+                <option th:each="stato : ${stati}"
+                        th:value="${stato}"
+                        th:text="${stato}">
+                    Stato
+                </option>
+
+            </select>
+			<span th:if="${#fields.hasErrors('stato')}"
+							      th:errors="*{stato}"
+							      style="color: red;"></span>
+        </div>
+
+
+        <br>
+
+
+        <!-- Invia tutti i dati al Controller -->
+        <button type="submit">Salva Proiezione</button>
+
+    </form>
+
+
+    <br>
+
+    <a th:href="@{/proiezioni}">
+        Torna alle proiezioni
+    </a>
+
+</body>
+
+</html>

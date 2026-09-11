@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<!--
+    Questa pagina mostra la lista di tutti i Registi.
+
+    I Registi arrivano dal Controller.
+
+    Nel Controller abbiamo usato:
+    model.addAttribute("registi", registaService.findAll());
+
+    Quindi qui possiamo usare ${registi}.
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registi</title>
+</head>
+
+<body>
+
+    <!-- Titolo della pagina. -->
+    <h1>Registi</h1>
+
+
+    <!--
+        Creiamo una lista HTML.
+
+        th:each funziona come un ciclo for.
+
+        Per ogni Regista presente dentro "registi",
+        creiamo un elemento della lista.
+
+        regista  = il singolo Regista
+        registi  = tutti i Registi
+    -->
+    <ul>
+
+        <li th:each="regista : ${registi}">
+
+            <!--
+			    Rendiamo il Regista cliccabile.
+
+			    L'id viene usato per costruire
+			    l'indirizzo della sua pagina di dettaglio.
+			-->
+			<a th:href="@{'/regista/' + ${regista.id}}"
+			   th:text="${regista.nome + ' ' + regista.cognome}">
+			    Nome Regista
+			</a>
+
+        </li>
+
+    </ul>
+	
+	<br>
+
+	<!-- Inserire un nuovo Regista è una funzione riservata all'ADMIN -->
+	<div sec:authorize="hasRole('ADMIN')">
+
+	    <a th:href="@{/registi/new}">
+	        Nuovo Regista
+	    </a>
+
+	</div>
+
+	<br>
+    <!-- Link per tornare alla lista dei Film. -->
+    <p>
+        <a th:href="@{/films}">Torna ai film</a>
+    </p>
+
+</body>
+

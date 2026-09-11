@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nuovo Festival</title>
+</head>
+
+<body>
+
+    <h1>Inserisci un nuovo Festival</h1>
+
+    <!--
+        th:object collega il form all'oggetto "festival"
+        creato dal Controller con new Festival().
+
+        Quando premi Salva, i dati vengono inviati
+        con POST all'indirizzo /festival.
+    -->
+    <form th:action="@{/festival}"
+          th:object="${festival}"
+          method="post">
+			
+		  <!-- Manteniamo l'id durante la modifica -->
+		  <input type="hidden"
+		         th:field="*{id}">
+        <p>
+            Nome:
+            <!-- *{nome} corrisponde all'attributo nome di Festival -->
+            <input type="text" th:field="*{nome}">
+			<span th:if="${#fields.hasErrors('nome')}"
+			      th:errors="*{nome}"
+			      style="color: red;"></span>
+        </p>
+
+        <p>
+            Anno:
+            <input type="number" th:field="*{anno}">
+			<!-- Errore dell'anno -->
+			<span th:if="${#fields.hasErrors('anno')}"
+			      th:errors="*{anno}"
+			      style="color: red;"></span>
+        </p>
+
+        <p>
+            Città:
+            <input type="text" th:field="*{citta}">
+			<!-- Errore della città -->
+			<span th:if="${#fields.hasErrors('citta')}"
+			      th:errors="*{citta}"
+			      style="color: red;"></span>
+        </p>
+
+        <p>
+            Data di inizio:
+            <!-- type="date" permette di scegliere una data -->
+            <input type="date" th:field="*{dataInizio}">
+			<!-- Errore della data di inizio -->
+			<span th:if="${#fields.hasErrors('dataInizio')}"
+			      th:errors="*{dataInizio}"
+			      style="color: red;"></span>
+        </p>
+
+        <p>
+            Data di fine:
+            <input type="date" th:field="*{dataFine}">
+			<!-- Errore della data di fine -->
+			<span th:if="${#fields.hasErrors('dataFine')}"
+			      th:errors="*{dataFine}"
+			      style="color: red;"></span>
+				  <!-- Mostra l'errore se la data di fine precede quella di inizio. -->
+				  
+				 	<span th:if="${#fields.hasErrors('dateValide')}"
+				  				     th:errors="*{dateValide}"
+				  				     style="color: red;"></span>	  
+        </p>
+
+        <p>
+            Descrizione:
+            <textarea th:field="*{descrizione}"></textarea>
+			<!-- Errore della descrizione -->
+			<span th:if="${#fields.hasErrors('descrizione')}"
+			      th:errors="*{descrizione}"
+			      style="color: red;"></span>
+        </p>
+
+        <button type="submit">Salva Festival</button>
+
+		<p>
+		    Film partecipanti:
+
+		    <!--
+		        "films" è la lista di tutti i Film
+		        che il Controller ha inserito nel Model.
+
+		        th:each crea una checkbox per ogni Film.
+		    -->
+		    <div th:each="film : ${films}">
+
+		        <input type="checkbox"
+		               th:field="*{films}"
+		               th:value="${film.id}">
+
+		        <span th:text="${film.title}">
+		            Titolo Film
+		        </span>
+
+		    </div>
+		</p>
+    </form>
+
+    <br>
+
+    <a href="/festivals">Torna ai festival</a>
+
+</body>
+
+</html>
